@@ -91,6 +91,123 @@ How?
 ``` 
         <link rel="stylesheet" href="{{ url('css/site.css') }}"> 
 ```
+- Always Use <b>url</b> in getting public files.
+
 # <b> NOTE: PLEASE BE MINDFUL OF THE SPACES, NOTICE THE {{ HAS SPACES }} </b>
 
+### For our routes = URL validation
+1. Name your routes in web.php by using ``` -->name('home.index'); ```
+- for instance, code from web.php
+```
+Route::get('/',[HomeController::class,'index'])->name('home.index');
+Route::get('/about/about',[HomeController::class,'about'])->name('home.about');
+Route::get('/contact',[HomeController::class,'contact'])->name('home.contact');
+```
+2. In your html/php file. Call your named route by doing this on hrefs. 
+<i> In navbar</i>
+```
+   <div class="relative p-4">
+            <a href="
+            {{ route('home.index') }}
+            ">Home</a>
+            <a href="  {{ route('home.about') }}">about</a>
+            <a href="  {{ route('home.contact') }}">contact</a>
+        </div>
+```
 
+- TIP: ROUTES NEED TO HAVE UNIQUE NAMES
+### Resource Controllers
+1. Create A Resource Controller by doing ``` php artisan make:controller GuitarsController --resource ```
+2. Go to your HTTP Controllers File and you should see the controller file der.
+- A resource is a single type of data where that your application is going to work with.
+- Controller contains the action methods when acting on that resource.
+- Examples: CRUD. A resource controller is responsible for CRUDDING a resource.
+<i> Think of it like an object </i>
+
+- PARTS OF A RESOURCE CONTROLLER
+- INDEX : VIEW THE WEBSITE
+- CREATE : GET REQ TO CREATE GUITARS
+- STORE: POST REQUEST TO SAVE THE CREATE GUITARS
+- EDIT: GET REQ TO EDIT GUITARS
+- UPDATE: POST REQ TO STORE UPDATED GUITARS PUT OR PATCH AS WELL
+- DESTROY: DELETE REQ
+- SHOW : SHOW APPROPRIATE GUITAR WHICH IS GET
+
+#### TO ORGANIZE VIEWS.
+1. create a folder inside views. 
+2. create blade.php file.
+3. In the controller, dig deeper by indicating the folder and file for instance ```  return view('guitars.index'); ```
+4. Route it by going to web.php
+```
+use App\Http\Controllers\GuitarsController;
+// Dont forget to import your controller then
+
+Route::resource('guitars',GuitarsController::class);
+
+// so what resource does is that: guitars is its root link and function that 
+// are on it will be /guitars/index , /guitars/create. It automatically do that
+```
+5. Go to your navbar which is in headers to add a link to bridge guitars page.
+```  <a href="  {{ route('guitars.index') }}">Guitars</a> ```
+
+### PASSING DATA TO VIEWS.
+1. For now, use a static data, put it inside the resource controller. 
+```
+  private static function getData(){
+        return [
+            ['id' =>1, 'name' =>'American Standard Strat', 'brand' => 'Fender' ],
+          ['id' =>1, 'name' =>'Starla', 'brand' => 'PRS' ],
+          ['id' =>1, 'name' =>'Mer', 'brand' => 'kun' ],
+          ['id' =>1, 'name' =>'Merhamdin', 'brand' => 'kon' ]
+        ];
+    }
+```
+2. To pass data do this
+```
+ return view('guitars.index',[
+                'guitars' => self::getData() ,
+                'userInput' => '<script>alert("hello")</script>' ]  );
+```
+3. Access array values in html. ``` @foreach () @endforeach ```
+- Example 
+```
+@if (@isset($guitars))
+    
+
+<table>
+    <tr>
+        <th>Guitar</th>
+        <th>brand</th>
+    </tr>
+
+
+@foreach ($guitars as $guitar)
+
+    <tr>
+      <td> {{ $guitar['name'] }} </td>
+      <td> {{ $guitar['brand'] }} </td>
+    </tr>
+
+@endforeach
+@else
+<h1> No record currently</h1>
+@endif  
+```
+- Code checks if record is found, if found, create a table else print an empty statement.
+#### SHOW METHOD
+1. Has a unique identifier, an integer value.
+```
+public function show($id)
+    {
+        // GET
+        $guitars= self::getData();
+        $index = array_search($id,array_column($guitars,'id'));
+        if($index === false){
+            abort(404);
+        }else{
+            return view('guitars.show',[
+                'guitars' => $guitars[$index] ,
+                'userInput' => '<script>alert("hello")</script>' ]   );
+        }
+    }
+```

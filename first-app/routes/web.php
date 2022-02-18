@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\GuitarsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,10 +13,13 @@ use App\Http\Controllers\HomeController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/',[HomeController::class,'index']);
-Route::get('/about/about',[HomeController::class,'about']);
-Route::get('/contact',[HomeController::class,'contact']);
+Route::get('/',[HomeController::class,'index'])->name('home.index');
+Route::get('/about',[HomeController::class,'about'])->name('home.about');
+Route::get('/contact',[HomeController::class,'contact'])->name('home.contact');
 
+Route::resource('guitars',GuitarsController::class);
+// so what resource does is that: guitars is its root link and function that 
+// are on it will be /guitars/index , /guitars/create. It automatically do that
 
 
 // Route::get('/store', function() {

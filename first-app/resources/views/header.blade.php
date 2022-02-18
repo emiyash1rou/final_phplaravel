@@ -18,9 +18,12 @@
     </head>
     <body class="antialiased">
         <div class="relative p-4">
-            <a href="/">Home</a>
-            <a href="/about">about</a>
-            <a href="/contact">contact</a>
+            <a href="
+            {{ route('home.index') }}
+            ">Home</a>
+            <a href="  {{ route('home.about') }}">about</a>
+            <a href="  {{ route('home.contact') }}">contact</a>
+            <a href="  {{ route('guitars.index') }}">Guitars</a>
         </div>
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 white:bg-gray-900 sm:items-center py-4 sm:pt-0">
             @yield('content')
