@@ -59,3 +59,38 @@ class HomeController extends Controller
 - In web.php import the controller in the top ``` use App\Http\Controllers\HomeController; ```
 - And write the simple code in route. ``` Route::get('/',[HomeController::class,'index']); ```
 ### Stopped at 44:09
+# Continued
+#### Layouts
+- allow the user to have a fixed template as a part of the html.
+- lessens code and organizes sections.
+- Specialized view that contains all the layout.
+How?
+1. Create a layout view in views folder.
+2. Use a directive called ```@extends('layout') ```
+```
+//denote a section by doing 
+
+@section('content')
+<html files>
+@endsection
+```
+3. Then indicate a target where the section will appear/insert using 
+```
+@yield('content') 
+```
+- and then in your php specific htmls, put a value by saying this
+```  @section('title',"About Us") ```
+
+#### VALID AND CORRECT URLS;
+- ``` $app = require_once __DIR__.'/../bootstrap/app.php'; ``` isn't the bootstrap css framework but it is the bootstrapping the application. Index.php is the entry point of our application. Handling the file. VERY IMPORTANT FILE DONT SCREW IT UP.
+- YOUTUBE LINK <a>https://www.youtube.com/watch?v=AGE3wRKljkw</a>
+#### PUBLIC FOLDER AND STATIC FILES
+- Go to public folder and then css.
+- Create file called site.css to organize css.
+- Access public files using 
+``` 
+        <link rel="stylesheet" href="{{ url('css/site.css') }}"> 
+```
+# <b> NOTE: PLEASE BE MINDFUL OF THE SPACES, NOTICE THE {{ HAS SPACES }} </b>
+
+
