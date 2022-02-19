@@ -1,11 +1,14 @@
 @extends('header')
 @section('title',"Guitars")
+
 @section('content')
+
 <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
     <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
       <h1> Guitars Yarn</h1>
     </div>
 <p> Hello, I'm Mer </p>
+<a href="{{ route('guitars.create') }}"><input type="button" value="Create"></a>
 @if (count($guitars)>0)
     
 
@@ -13,6 +16,7 @@
     <tr>
         <th>Guitar</th>
         <th>brand</th>
+        <th>Year</th>
         <th>View</th>
     </tr>
 
@@ -22,6 +26,7 @@
     <tr>
       <td> {{ $guitar['name'] }} </td>
       <td> {{ $guitar['brand'] }} </td>
+      <td> {{ $guitar['year_made'] }} </td>
      <td> <a href="{{ route('guitars.show',['guitar' => $guitar['id'] ]) }}">View Data</a> </td>
     </tr>
 
